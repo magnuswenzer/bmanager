@@ -1,0 +1,209 @@
+{
+  "databases": [
+    {"name": "local",
+      "module": "bmanager.database.sqlite",
+      "class": "SqliteDatabase",
+      "initiation": {"location": "/Users/mw/python/bmanager/local.sqlite3"},
+      "activated": true
+      },
+    {"name": "test_local",
+      "module": "bmanager.database.sqlite",
+      "class": "SqliteDatabase",
+      "initiation": {"location": "test_local.sqlite3"},
+      "activated": false
+      }
+  ],
+    "tables": [
+      {
+        "name": "Task",
+        "activated": true,
+        "columns": [
+          {
+            "name": "id",
+            "data_type": "integer",
+            "primary_key": true,
+            "activated": true,
+            "hidden": true
+          },
+          {
+            "name": "user_name",
+            "data_type": "text",
+            "mandatory": true,
+            "activated": true,
+            "not_in_db": true
+          },
+          {
+            "name": "employee_id",
+            "data_type": "integer",
+            "mandatory": true,
+            "activated": true,
+            "hidden": true,
+            "unique": true
+          },
+          {
+            "name": "project_id",
+            "data_type": "integer",
+            "activated": true
+          },
+          {
+            "name": "time",
+            "data_type": "timestamp",
+            "mandatory": true,
+            "activated": true,
+            "hidden": true
+          },
+          {
+            "name": "date",
+            "display_name": "Datum",
+            "data_type": "timestamp",
+            "mandatory": true,
+            "activated": true
+          },
+          {
+            "name": "task",
+            "display_name": "Uppgift",
+            "data_type": "text",
+            "mandatory": true,
+            "activated": true
+          },
+          {
+            "name": "comment",
+            "display_name": "Kommentar",
+            "data_type": "text",
+            "activated": true
+          }
+        ]
+      },
+      {
+        "name": "TimeReport",
+        "activated": true,
+        "columns": [
+          {
+            "name": "id",
+            "data_type": "Time Report ID",
+            "primary_key": true,
+            "activated": true,
+            "hidden": true
+          },
+          {
+            "name": "date",
+            "data_type": "timestamp",
+            "primary_key": false,
+            "mandatory": true,
+            "activated": true,
+            "hidden": false
+          },
+          {
+            "name": "project_id",
+            "data_type": "integer",
+            "primary_key": false,
+            "mandatory": true,
+            "activated": true,
+            "hidden": false
+          },
+          {
+            "name": "employee_id",
+            "data_type": "integer",
+            "primary_key": false,
+            "mandatory": true,
+            "activated": true,
+            "hidden": false
+          },
+          {
+            "name": "hours_reported",
+            "data_type": "integer",
+            "primary_key": false,
+            "mandatory": true,
+            "activated": true,
+            "hidden": false
+          }
+        ]
+      },
+      {
+        "name": "Project",
+        "activated": true,
+        "columns": [
+          {
+            "name": "id",
+            "data_type": "integer",
+            "primary_key": true,
+            "activated": true,
+            "hidden": true
+          },
+          {
+            "name": "project_name",
+            "display_name": "Projektnamn",
+            "data_type": "text",
+            "mandatory": true,
+            "activated": true,
+            "unique": true
+          },
+          {
+            "name": "start_date",
+            "display_name": "Startdatum",
+            "data_type": "timestamp",
+            "activated": true
+          },
+          {
+            "name": "end_date",
+            "display_name": "Slutdatum",
+            "data_type": "timestamp",
+            "activated": true
+          },
+          {
+            "name": "comment",
+            "display_name": "Kommentar",
+            "data_type": "text",
+            "activated": true
+          }
+        ]
+      },
+      {
+        "name": "Employee",
+        "activated": true,
+        "columns": [
+          {
+            "name": "id",
+            "data_type": "integer",
+            "primary_key": true,
+            "activated": true,
+            "hidden": true
+          },
+          {
+            "name": "user_name",
+            "display_name": "Användarnamn",
+            "data_type": "text",
+            "mandatory": true,
+            "activated": true,
+            "unique": true
+          },
+          {
+            "name": "first_name",
+            "display_name": "Förnamn",
+            "data_type": "text",
+            "mandatory": true,
+            "activated": true
+          },
+          {
+            "name": "last_name",
+            "display_name": "Efternamn",
+            "data_type": "text",
+            "mandatory": true,
+            "activated": true
+          },
+          {
+            "name": "date_of_employment",
+            "display_name": "Anställningsdatum",
+            "data_type": "timestamp",
+            "activated": true
+          },
+          {
+            "name": "phone_number",
+            "display_name": "Telefonnummer",
+            "data_type": "text",
+            "activated": true
+          }
+        ]
+      }
+    ]
+}
