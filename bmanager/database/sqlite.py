@@ -81,6 +81,7 @@ class SqliteDatabase(Database):
     def _create_table(self, table_info):
         sql = f"""CREATE TABLE IF NOT EXISTS {table_info.get('name')} (\n"""
         columns = []
+        unique_combo = []
         for col in table_info.get('columns'):
             if col.get('not_in_db'):
                 continue
@@ -91,7 +92,12 @@ class SqliteDatabase(Database):
                 string = string + ' NOT NULL'
                 if col.get('unique'):
                     string = string + ' UNIQUE'
+            if col.get('unique_combo'):
+                unique_combo.append(col.get('name'))
             columns.append(string)
+        if unique_combo:
+            unique_combo_str = f"UNIQUE({', '.join(unique_combo)})"
+            columns.append(unique_combo_str)
         sql = sql + ',\n'.join(columns) + '\n);'
         self._execute(sql)
 
@@ -99,6 +105,8 @@ class SqliteDatabase(Database):
         current_columns = self.get_columns_in_table(table_info.get('name'))
         for col in table_info.get('columns'):
             if col.get('name') in current_columns:
+                continue
+            if col.get('not_in_db'):
                 continue
             sql = f"""ALTER TABLE {table_info.get('name')} ADD COLUMN {col.get('name')} {col.get('data_type')}"""
             self._execute(sql)
@@ -140,7 +148,7 @@ class SqliteDatabase(Database):
         # Check dates
         datetime_synonyms = utils.get_datetime_synonyms()
 
-        sql_select = f"""SELECT {column_string(columns)} FROM {table} {where_string(**kwargs)}"""
+        sql_select = f"""SELECT {column_string(columns)} FROM {table_string(table)} {where_string(**kwargs)}"""
         result = self._execute(sql_select, fetchall=True)
         return_list = []
         for row in result:
@@ -148,7 +156,7 @@ class SqliteDatabase(Database):
                 row_dict = dict(zip(columns, row))
             else:
                 row_dict = dict(zip(self.get_columns_in_table(table), row))
-                # TODO: All columns should be based on config instead of table columns
+                # TODO: All columns should be based on config instead of table columns?
             for key, value in row_dict.items():
                 if not value:
                     continue
@@ -157,6 +165,9 @@ class SqliteDatabase(Database):
                     row_dict[key] = value
             return_list.append(row_dict)
         return return_list
+
+    def get_query(self, query):
+        return self._execute(query, fetchall=True)
 
     def update_table(self, table, data, **kwargs):
         variables = []
@@ -167,6 +178,12 @@ class SqliteDatabase(Database):
         set_str = f"""SET {', '.join(set_list)}"""
         update_sql = f""" UPDATE {table} {set_str} {where_string(**kwargs)}"""
         self._execute(update_sql, variables=variables)
+
+
+def table_string(table):
+    if type(table) == list:
+        return ', '.join(table)
+    return table
 
 
 def column_string(columns=[]):
@@ -183,7 +200,8 @@ def where_string(**kwargs):
     where_list = []
     for key, value in kwargs.items():
         if type(value) == str:
-            value = f"'{value}'"
+            if '.' not in value:
+                value = f"'{value}'"
         string = f"""{key} = {value}"""
         where_list.append(string)
     where_str = ''

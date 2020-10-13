@@ -26,19 +26,11 @@
             "hidden": true
           },
           {
-            "name": "user_name",
-            "data_type": "text",
-            "mandatory": true,
-            "activated": true,
-            "not_in_db": true
-          },
-          {
             "name": "employee_id",
             "data_type": "integer",
             "mandatory": true,
             "activated": true,
-            "hidden": true,
-            "unique": true
+            "hidden": true
           },
           {
             "name": "project_id",
@@ -48,7 +40,6 @@
           {
             "name": "time",
             "data_type": "timestamp",
-            "mandatory": true,
             "activated": true,
             "hidden": true
           },
@@ -56,7 +47,6 @@
             "name": "date",
             "display_name": "Datum",
             "data_type": "timestamp",
-            "mandatory": true,
             "activated": true
           },
           {
@@ -71,51 +61,6 @@
             "display_name": "Kommentar",
             "data_type": "text",
             "activated": true
-          }
-        ]
-      },
-      {
-        "name": "TimeReport",
-        "activated": true,
-        "columns": [
-          {
-            "name": "id",
-            "data_type": "Time Report ID",
-            "primary_key": true,
-            "activated": true,
-            "hidden": true
-          },
-          {
-            "name": "date",
-            "data_type": "timestamp",
-            "primary_key": false,
-            "mandatory": true,
-            "activated": true,
-            "hidden": false
-          },
-          {
-            "name": "project_id",
-            "data_type": "integer",
-            "primary_key": false,
-            "mandatory": true,
-            "activated": true,
-            "hidden": false
-          },
-          {
-            "name": "employee_id",
-            "data_type": "integer",
-            "primary_key": false,
-            "mandatory": true,
-            "activated": true,
-            "hidden": false
-          },
-          {
-            "name": "hours_reported",
-            "data_type": "integer",
-            "primary_key": false,
-            "mandatory": true,
-            "activated": true,
-            "hidden": false
           }
         ]
       },
@@ -139,6 +84,12 @@
             "unique": true
           },
           {
+            "name": "total_hours",
+            "display_name": "Totalt antal planerade timmar",
+            "data_type": "integer",
+            "activated": true
+          },
+          {
             "name": "start_date",
             "display_name": "Startdatum",
             "data_type": "timestamp",
@@ -148,6 +99,94 @@
             "name": "end_date",
             "display_name": "Slutdatum",
             "data_type": "timestamp",
+            "activated": true
+          },
+          {
+            "name": "comment",
+            "display_name": "Kommentar",
+            "data_type": "text",
+            "activated": true
+          }
+        ]
+      },
+      {
+        "name": "WorkPlan",
+        "activated": true,
+        "columns": [
+          {
+            "name": "id",
+            "data_type": "integer",
+            "primary_key": true,
+            "activated": true,
+            "hidden": true
+          },
+          {
+            "name": "project_id",
+            "data_type": "integer",
+            "mandatory": true,
+            "activated": true,
+            "unique_combo": true
+          },
+          {
+            "name": "employee_id",
+            "data_type": "integer",
+            "mandatory": true,
+            "activated": true,
+            "unique_combo": true
+          },
+          {
+            "name": "hours_planed",
+            "data_type": "integer",
+            "mandatory": true,
+            "activated": true
+          }
+        ]
+      },
+      {
+        "name": "WorkReport",
+        "activated": true,
+        "columns": [
+          {
+            "name": "id",
+            "data_type": "integer",
+            "primary_key": true,
+            "activated": true,
+            "hidden": true
+          },
+          {
+            "name": "project_id",
+            "data_type": "integer",
+            "mandatory": true,
+            "activated": true,
+            "hidden": true,
+            "unique_combo": true
+          },
+          {
+            "name": "project_name",
+            "data_type": "text",
+            "mandatory": true,
+            "activated": true,
+            "not_in_db": true
+          },
+          {
+            "name": "employee_id",
+            "data_type": "integer",
+            "mandatory": true,
+            "activated": true,
+            "hidden": true,
+            "unique_combo": true
+          },
+          {
+            "name": "date",
+            "data_type": "text",
+            "mandatory": true,
+            "activated": true,
+            "unique_combo": true
+          },
+          {
+            "name": "hours_reported",
+            "data_type": "integer",
+            "mandatory": true,
             "activated": true
           },
           {
@@ -176,6 +215,12 @@
             "mandatory": true,
             "activated": true,
             "unique": true
+          },
+          {
+            "name": "role",
+            "data_type": "text",
+            "mandatory": true,
+            "activated": true
           },
           {
             "name": "first_name",

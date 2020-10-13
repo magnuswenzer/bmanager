@@ -25,7 +25,7 @@ class TableInfo(object):
 
     def __init__(self, table_name, config_object=None):
         self.config = config_object
-        self.table_name = table_name.capitalize()
+        self.table_name = table_name
 
         self.table_info = {}
         self.column_objects = {}
@@ -38,6 +38,7 @@ class TableInfo(object):
 
     def _load_info(self):
         for table in self.config.get_tables_info():
+            print(self.table_name, 'table', table)
             if table.get('name') == self.table_name:
                 self.table_info = table
         for column in self.table_info.get('columns'):
@@ -53,14 +54,15 @@ class TableInfo(object):
             self.column_objects[column_name] = column_object
             self.visible_columns.append(column_name)
             if column_object.get('mandatory'):
-                self.mandatory_columns.append(column_name)
+                if not column_object.get('not_in_db', False):
+                    self.mandatory_columns.append(column_name)
 
     def has_column(self, column_name):
         if self.column_objects.get(column_name):
             return True
         return False
 
-    def get_columns_info(self, *args, as_list=False):
+    def get_column_info(self, *args, as_list=False):
         if not args:
             print('not args', type(self.column_objects))
             if as_list:

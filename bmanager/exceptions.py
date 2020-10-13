@@ -23,10 +23,24 @@ class MissingData(BmanagerException):
     info = 'Missing data'
 
 
+class MissingEmployee(BmanagerException):
+    code = 5
+    info = 'Missing employee'
+
+
+class MissingProject(BmanagerException):
+    code = 6
+    info = 'Missing project'
+
+
 class MethodNotImplemented(BmanagerException):
     code = 99
     info = 'Method not implemented'
 
+
+class NoAdminRights(BmanagerException):
+    code = 88
+    info = 'Method not implemented'
 
 
 

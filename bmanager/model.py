@@ -9,6 +9,7 @@ class Model(object):
         self.db = None
 
         self.user = None  # user_name in employee
+        self.role = None  # user role
 
         self.login()
 
@@ -19,7 +20,8 @@ class Model(object):
         :param password:
         :return:
         """
-        self.user = 'admin'
+        self.user = 'magw'
+        self.role = 'admin'
         return True
 
     def _get_table_content_object(self, table_name):
@@ -46,22 +48,34 @@ class Model(object):
         self.db.create_tables(self.config.tables)
 
     def add_record(self, table_name, **data):
-        table_record = self._get_table_record_object(table_name)
-        table_record.set_data(**data)
-        table_record.save()
+        self.db.add_to_table(table_name, **data)
+
+        # table_record = self._get_table_record_object(table_name)
+        # table_record.set_data(**data)
+        # table_record.save()
 
     def update_record(self, table_name, data, **kwargs):
-        table_record = self._get_table_record_object(table_name, **kwargs)
-        table_record.add_data(**data)
-        table_record.save()
+        self.db.update_table(table_name, data, **kwargs)
 
-    def get_columns_info(self, table_name, as_list=False):
+        # table_record = self._get_table_record_object(table_name, **kwargs)
+        # table_record.add_data(**data)
+        # table_record.save()
+
+    def get_record(self, table_name, columns=[], **kwargs):
+        return self.db.get_from_table(table_name, columns=columns, **kwargs)
+
+        # return self._get_table_record_object(table_name, **kwargs)
+
+    def get_column_info(self, table_name, as_list=False):
         info_object = self._get_table_info_object(table_name)
-        return info_object.get_columns_info(as_list=as_list)
+        return info_object.get_column_info(as_list=as_list)
 
     def get_content_list(self, table_name, *args, **kwargs):
         content_object = self._get_table_content_object(table_name)
         return content_object.get_content_list(*args, **kwargs)
+
+    def get_query(self, query):
+        return self.db.get_query(query)
 
     def login(self, username=None, password=None):
         if self._check_authorization(username=username, password=password):

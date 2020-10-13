@@ -65,7 +65,7 @@ class ModelConfig(object):
             only_activated: default is True
             only_mandatory: default is False
         """
-        table = table.capitalize()
+        # table = table.capitalize()
         columns = []
         for tb in self.tables:
             if tb.get('name') == table:

@@ -42,6 +42,9 @@ class Database(object):
     def get_from_table(self, table, columns=[], **kwargs):
         raise exceptions.MethodNotImplemented
 
+    def get_query(self, query):
+        raise exceptions.MethodNotImplemented
+
     def update_table(self, table, data, **kwargs):
         raise exceptions.MethodNotImplemented
 
